@@ -15,6 +15,8 @@ const TareaEtiqueta = dbConnection.define('tarea_etiqueta', {
         type: DataTypes.INTEGER,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
-
 module.exports = TareaEtiqueta;

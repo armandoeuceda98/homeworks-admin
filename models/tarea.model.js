@@ -31,6 +31,9 @@ const Tarea = dbConnection.define('tarea', {
         type: DataTypes.INTEGER,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = Tarea;

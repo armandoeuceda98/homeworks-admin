@@ -5,12 +5,12 @@ const Comentario = db.comentario;
 
 // Obtener todos los comentarios de una tarea por su ID
 const obtenerTodosLosComentariosDeTarea = async (req = request, res = response) => {
-    const { idTarea } = req.params;
+    const { idTarea } = req.body;
     try {
 
         const comentarios = await Comentario.findAll({
             where: {
-                idTarea
+                idTarea: idTarea
             }
         });
 
@@ -23,9 +23,9 @@ const obtenerTodosLosComentariosDeTarea = async (req = request, res = response) 
 
 // Obtener un comentario por su ID
 const obtenerComentarioPorId = async (req = request, res = response) => {
-    const { id } = req.params;
+    const { idComentario } = req.body;
     try {
-        const comentario = await Comentario.findByPk(id);
+        const comentario = await Comentario.findByPk(idComentario);
         if (comentario) {
             res.status(200).json(comentario);
         } else {
@@ -58,10 +58,9 @@ const crearComentario = async (req = request, res = response) => {
 
 // Actualizar un comentario por su ID
 const actualizarComentario = async (req = request, res = response) => {
-    const { id } = req.params;
-    const { contenido } = req.body;
+    const { idComentario, contenido } = req.body;
     try {
-        const comentario = await Comentario.findByPk(id);
+        const comentario = await Comentario.findByPk(idComentario);
         if (comentario) {
             comentario.contenido = contenido;
             await comentario.save();

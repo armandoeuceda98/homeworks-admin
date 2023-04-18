@@ -11,6 +11,9 @@ const Etiqueta = dbConnection.define('etiqueta', {
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = Etiqueta;

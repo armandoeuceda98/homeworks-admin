@@ -14,6 +14,9 @@ const Categoria = dbConnection.define('categoria', {
     descripcion: {
         type: DataTypes.TEXT
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = Categoria;

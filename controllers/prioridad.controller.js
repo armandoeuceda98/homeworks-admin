@@ -17,7 +17,7 @@ const obtenerTodasLasPrioridades = async (req = request, res = response) => {
 // Obtener una prioridad por su ID
 const obtenerPrioridadPorId = async (req = request, res = response) => {
     try {
-        const prioridad = await Prioridad.findByPk(req.params.id);
+        const prioridad = await Prioridad.findByPk(req.body.idPrioridad);
         if (prioridad) {
             res.json(prioridad);
         } else {
@@ -43,9 +43,14 @@ const crearPrioridad = async (req = request, res = response) => {
 // Actualizar una prioridad por su ID
 const actualizarPrioridad = async (req = request, res = response) => {
     try {
-        const prioridad = await Prioridad.findByPk(req.params.id);
+        const { idPrioridad, nombre, descripcion } = req.body;
+
+        const prioridad= await Prioridad.findByPk(idPrioridad);
         if (prioridad) {
-            await prioridad.update(req.body);
+            await prioridad.update({
+                nombre: nombre,
+                descripcion: descripcion
+            });
             res.json(prioridad);
         } else {
             res.status(404).json({ mensaje: 'Prioridad no encontrada' });
@@ -59,7 +64,9 @@ const actualizarPrioridad = async (req = request, res = response) => {
 // Eliminar una prioridad por su ID
 const eliminarPrioridad = async (req = request, res = response) => {
     try {
-        const prioridad = await Prioridad.findByPk(req.params.id);
+        const { idPrioridad } = req.body;
+
+        const prioridad = await Prioridad.findByPk(idPrioridad);
         if (prioridad) {
             await prioridad.destroy();
             res.json({ mensaje: 'Prioridad eliminada exitosamente' });

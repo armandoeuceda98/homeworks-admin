@@ -5,9 +5,9 @@ const { obtenerTodasLasCategorias, obtenerCategoriaPorId, crearCategoria, actual
 
 const router = Router();
 
-router.get('/categorias', obtenerTodasLasCategorias); // Ruta para obtener todas las categorías
-router.get('/categorias/:id', obtenerCategoriaPorId); // Ruta para obtener una categoría por su ID
-router.post('/categorias', crearCategoria); // Ruta para crear una nueva categoría
-router.put('/categorias/:id', actualizarCategoria); // Ruta para actualizar una categoría por su ID
-router.delete('/categorias/:id', eliminarCategoria); // Ruta para eliminar una categoría por su ID
+router.get('/', obtenerTodasLasCategorias); // Ruta para obtener todas las categorías
+router.get('/byId', obtenerCategoriaPorId); // Ruta para obtener una categoría por su ID
+router.post('/', crearCategoria); // Ruta para crear una nueva categoría
+router.put('/', actualizarCategoria); // Ruta para actualizar una categoría por su ID
+router.delete('/', eliminarCategoria); // Ruta para eliminar una categoría por su ID
 module.exports = router;

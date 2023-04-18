@@ -7,11 +7,17 @@ const comentario = require('./comentario.model');
 const prioridad = require('./prioridad.model');
 
 
-tarea.belongsTo(usuario);
+tarea.belongsTo(usuario, {
+    foreignKey: 'idUsuario'
+});
 
-usuario.hasMany(tarea);
+tarea.belongsTo(categoria, {
+    foreignKey: 'idCategoria'
+});
 
-categoria.hasMany(tarea);
+tarea.belongsTo(prioridad, {
+    foreignKey: 'idPrioridad'
+});
 
 tarea.belongsToMany(etiqueta, { 
     through: tareaEtiqueta,
@@ -27,7 +33,6 @@ etiqueta.belongsToMany(tarea, {
 comentario.belongsTo(tarea);
 comentario.belongsTo(usuario);
 
-prioridad.belongsTo(tarea);
 
 const db = {
     usuario,

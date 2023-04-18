@@ -24,7 +24,8 @@ const Comentario = dbConnection.define('comentario', {
         allowNull: false
     }
 }, {
-    timestamps: false // Indica que no se incluyan los campos de timestamps en la tabla
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = Comentario;

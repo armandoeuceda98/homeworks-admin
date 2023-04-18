@@ -17,7 +17,7 @@ const obtenerTodasLasCategorias = async (req = request, res = response) => {
 // Obtener una categoría por su ID
 const obtenerCategoriaPorId = async (req = request, res = response) => {
     try {
-        const categoria = await Categoria.findByPk(req.params.id);
+        const categoria = await Categoria.findByPk(req.body.idCategoria);
         if (categoria) {
             res.json(categoria);
         } else {
@@ -43,9 +43,14 @@ const crearCategoria = async (req = request, res = response) => {
 // Actualizar una categoría por su ID
 const actualizarCategoria = async (req = request, res = response) => {
     try {
-        const categoria = await Categoria.findByPk(req.params.id);
+        const { idCategoria, nombre, descripcion } = req.body
+
+        const categoria = await Categoria.findByPk(idCategoria);
         if (categoria) {
-            await categoria.update(req.body);
+            await categoria.update({
+                nombre: nombre,
+                descripcion: descripcion
+            });
             res.json(categoria);
         } else {
             res.status(404).json({ mensaje: 'Categoría no encontrada' });
@@ -59,7 +64,9 @@ const actualizarCategoria = async (req = request, res = response) => {
 // Eliminar una categoría por su ID
 const eliminarCategoria = async (req = request, res = response) => {
     try {
-        const categoria = await Categoria.findByPk(req.params.id);
+        const { idCategoria } = req.body
+
+        const categoria = await Categoria.findByPk(idCategoria);
         if (categoria) {
             await categoria.destroy();
             res.json({ mensaje: 'Categoría eliminada exitosamente' });

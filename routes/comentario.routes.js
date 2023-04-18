@@ -5,10 +5,10 @@ const { obtenerTodosLosComentariosDeTarea, obtenerComentarioPorId, crearComentar
 
 const router = Router();
 
-router.get('/comentarios/:tarea', obtenerTodosLosComentariosDeTarea); // Ruta para obtener todos los comentarios
-router.get('/comentarios/:id', obtenerComentarioPorId); // Ruta para obtener un comentario por su ID
-router.post('/comentarios', crearComentario); // Ruta para crear un nuevo comentario
-router.put('/comentarios/:id', actualizarComentario); // Ruta para actualizar un comentario por su ID
-router.delete('/comentarios/:id', eliminarComentario); // Ruta para eliminar un comentario por su ID
+router.get('/tarea/', obtenerTodosLosComentariosDeTarea); // Ruta para obtener todos los 
+router.get('/byId', obtenerComentarioPorId); // Ruta para obtener un comentario por su ID
+router.post('/', crearComentario); // Ruta para crear un nuevo comentario
+router.put('/', actualizarComentario); // Ruta para actualizar un comentario por su ID
+router.delete('/', eliminarComentario); // Ruta para eliminar un comentario por su ID
 
 module.exports = router;

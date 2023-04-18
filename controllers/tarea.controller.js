@@ -5,12 +5,12 @@ const Tarea = db.tarea;
 
 // Obtener todas las tareas de un usuario por su ID
 const obtenerTodasLasTareasDeUsuario = async (req = request, res = response) => {
-    const { idUsuario } = req.params;
+    const { idUsuario } = req.body;
     try {
 
         const tareas = await Tarea.findAll({
             where: {
-                idUsuario
+                idUsuario: idUsuario
             }
         });
 
@@ -23,9 +23,9 @@ const obtenerTodasLasTareasDeUsuario = async (req = request, res = response) => 
 
 // Obtener una tarea por su ID
 const obtenerTareaPorId = async (req = request, res = response) => {
-    const { id } = req.params;
+    const { idTarea } = req.body;
     try {
-        const tarea = await Tarea.findByPk(id);
+        const tarea = await Tarea.findByPk(idTarea);
         if (tarea) {
             res.status(200).json(tarea);
         } else {
@@ -58,10 +58,9 @@ const crearTarea = async (req = request, res = response) => {
 
 // Actualizar una tarea por su ID
 const actualizarTarea = async (req = request, res = response) => {
-    const { id } = req.params;
-    const { titulo, descripcion, estado, idCategoria, idPrioridad } = req.body;
+    const { idTarea, titulo, descripcion, estado, idCategoria, idPrioridad } = req.body;
     try {
-        const tarea = await Tarea.findByPk(id);
+        const tarea = await Tarea.findByPk(idTarea);
         if (tarea) {
             tarea.titulo = titulo;
             tarea.descripcion = descripcion;
@@ -81,9 +80,9 @@ const actualizarTarea = async (req = request, res = response) => {
 
 // Eliminar una tarea por su ID
 const eliminarTarea = async (req = request, res = response) => {
-    const { id } = req.params;
+    const { idTarea } = req.body;
     try {
-        const tarea = await Tarea.findByPk(id);
+        const tarea = await Tarea.findByPk(idTarea);
         if (tarea) {
             await tarea.destroy();
             res.status(200).json({ mensaje: 'Tarea eliminada exitosamente' });

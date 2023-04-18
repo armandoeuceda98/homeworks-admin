@@ -11,6 +11,9 @@ const Prioridad = dbConnection.define('prioridad', {
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = Prioridad;

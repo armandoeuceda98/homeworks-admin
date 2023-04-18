@@ -17,7 +17,9 @@ const obtenerTodasLasEtiquetas = async (req = request, res = response) => {
 // Obtener una etiqueta por su ID
 const obtenerEtiquetaPorId = async (req = request, res = response) => {
     try {
-        const etiqueta = await Etiqueta.findByPk(req.params.id);
+        const { idEtiqueta } = req.body;
+
+        const etiqueta = await Etiqueta.findByPk(idEtiqueta);
         if (etiqueta) {
             res.json(etiqueta);
         } else {
@@ -43,10 +45,13 @@ const crearEtiqueta = async (req = request, res = response) => {
 // Actualizar una etiqueta por su ID
 const actualizarEtiqueta = async (req = request, res = response) => {
     try {
-        const etiqueta = await Etiqueta.findByPk(req.params.id);
+        const { idEtiqueta, nombre} = req.body;
+
+        const etiqueta = await Etiqueta.findByPk(idEtiqueta);
         if (etiqueta) {
-            await etiqueta.update(req.body);
-            res.json(etiqueta);
+            etiqueta.nombre = nombre;
+            await etiqueta.save();
+            res.status(200).json(etiqueta);
         } else {
             res.status(404).json({ mensaje: 'Etiqueta no encontrada' });
         }
@@ -59,7 +64,9 @@ const actualizarEtiqueta = async (req = request, res = response) => {
 // Eliminar una etiqueta por su ID
 const eliminarEtiqueta = async (req = request, res = response) => {
     try {
-        const etiqueta = await Etiqueta.findByPk(req.params.id);
+        const { idEtiqueta } = req.body;
+
+        const etiqueta = await Etiqueta.findByPk(idEtiqueta);
         if (etiqueta) {
             await etiqueta.destroy();
             res.json({ mensaje: 'Etiqueta eliminada exitosamente' });

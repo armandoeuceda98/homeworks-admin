@@ -17,9 +17,9 @@ const usuarioGet = async (req = request, res = response) => {
 // Obtener usuario por id
 const usuarioGetById = async (req = request, res = response) => {
 
-    const { id } = req.params;
+    const { idUsuario } = req.body;
     try {
-        const usuario = await Usuario.findByPk(id);
+        const usuario = await Usuario.findByPk(idUsuario);
         if (usuario) {
             res.status(200).json(usuario);
         } else {
