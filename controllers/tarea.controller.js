@@ -24,9 +24,6 @@ const obtenerTodasLasTareasDeUsuario = async (req = request, res = response) => 
                 {
                     model: Prioridad
                 },
-                {
-                    model: Usuario
-                }
             ]
         });
 
@@ -52,9 +49,6 @@ const obtenerTareaPorId = async (req = request, res = response) => {
                 {
                     model: Prioridad
                 },
-                {
-                    model: Usuario
-                }
             ]
         });
         if (tarea) {
