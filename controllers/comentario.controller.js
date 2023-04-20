@@ -5,7 +5,7 @@ const Comentario = db.comentario;
 
 // Obtener todos los comentarios de una tarea por su ID
 const obtenerTodosLosComentariosDeTarea = async (req = request, res = response) => {
-    const { idTarea } = req.body;
+    const { idTarea } = req.query;
     try {
 
         const comentarios = await Comentario.findAll({
@@ -23,9 +23,9 @@ const obtenerTodosLosComentariosDeTarea = async (req = request, res = response) 
 
 // Obtener un comentario por su ID
 const obtenerComentarioPorId = async (req = request, res = response) => {
-    const { idComentario } = req.body;
+    const { id } = req.body;
     try {
-        const comentario = await Comentario.findByPk(idComentario);
+        const comentario = await Comentario.findByPk(id);
         if (comentario) {
             res.status(200).json(comentario);
         } else {
@@ -39,14 +39,15 @@ const obtenerComentarioPorId = async (req = request, res = response) => {
 
 // Crear un nuevo comentario
 const crearComentario = async (req = request, res = response) => {
-    const { contenido, idUsuario, idTarea } = req.body;
+    const { contenido, idTarea } = req.body;
+    const idUsuario = req.uid;
     try {
         const nuevaFecha = new Date();
         const nuevoComentario = await Comentario.create({
-            contenido,
+            contenido: contenido,
             fecha: nuevaFecha,
-            idUsuario,
-            idTarea
+            idUsuario: idUsuario,
+            idTarea: idTarea
         });
         res.status(201).json(nuevoComentario);
     } catch (error) {
@@ -58,9 +59,9 @@ const crearComentario = async (req = request, res = response) => {
 
 // Actualizar un comentario por su ID
 const actualizarComentario = async (req = request, res = response) => {
-    const { idComentario, contenido } = req.body;
+    const { id, contenido } = req.body;
     try {
-        const comentario = await Comentario.findByPk(idComentario);
+        const comentario = await Comentario.findByPk(id);
         if (comentario) {
             comentario.contenido = contenido;
             await comentario.save();
@@ -76,7 +77,7 @@ const actualizarComentario = async (req = request, res = response) => {
 
 // Eliminar un comentario por su ID
 const eliminarComentario = async (req = request, res = response) => {
-    const { id } = req.params;
+    const { id } = req.query;
     try {
         const comentario = await Comentario.findByPk(id);
         if (comentario) {
