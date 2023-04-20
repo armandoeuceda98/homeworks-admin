@@ -1,17 +1,33 @@
 const { request, response } = require('express');
 
 const db = require('../models/index');
+const Usuario = db.usuario;
+const Prioridad = db.prioridad;
 const Tarea = db.tarea;
-
+const Categoria = db.categoria;
 // Obtener todas las tareas de un usuario por su ID
 const obtenerTodasLasTareasDeUsuario = async (req = request, res = response) => {
-    const { idUsuario } = req.body;
+    console.log('req.uid');
+    console.log(req);
+    const { uid } = req;
+    console.log(uid)
     try {
 
         const tareas = await Tarea.findAll({
             where: {
-                idUsuario: idUsuario
-            }
+                idUsuario: uid
+            },
+            include: [
+                {
+                    model: Categoria
+                },
+                {
+                    model: Prioridad
+                },
+                {
+                    model: Usuario
+                }
+            ]
         });
 
         res.status(200).json(tareas);
@@ -25,7 +41,22 @@ const obtenerTodasLasTareasDeUsuario = async (req = request, res = response) => 
 const obtenerTareaPorId = async (req = request, res = response) => {
     const { idTarea } = req.body;
     try {
-        const tarea = await Tarea.findByPk(idTarea);
+        const tarea = await Tarea.findOne({
+            where: {
+                id: idTarea
+            },
+            include: [
+                {
+                    model: Categoria
+                },
+                {
+                    model: Prioridad
+                },
+                {
+                    model: Usuario
+                }
+            ]
+        });
         if (tarea) {
             res.status(200).json(tarea);
         } else {
@@ -39,15 +70,16 @@ const obtenerTareaPorId = async (req = request, res = response) => {
 
 // Crear una nueva tarea
 const crearTarea = async (req = request, res = response) => {
-    const { titulo, descripcion, estado, idCategoria, idPrioridad, idUsuario } = req.body;
+    const { uid } = req;
+    const { titulo, descripcion, estado, idCategoria, idPrioridad } = req.body;
     try {
         const nuevaTarea = await Tarea.create({
-            titulo,
-            descripcion,
-            estado,
-            idCategoria,
-            idPrioridad,
-            idUsuario
+            titulo: titulo,
+            descripcion: descripcion,
+            estado: estado,
+            idCategoria: idCategoria,
+            idPrioridad: idPrioridad,
+            idUsuario: uid
         });
         res.status(201).json(nuevaTarea);
     } catch (error) {

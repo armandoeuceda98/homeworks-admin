@@ -7,7 +7,7 @@ const generarJWT = (idUsuario = '') => {
         const payload = { idUsuario };
 
         jwt.sign(payload, process.env.API_KEY, {
-            expiresIn: '18000'
+            expiresIn: "86400000"
         }, (err, token) => {
             if (err) {
                 console.log(err);
